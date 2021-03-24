@@ -1,0 +1,275 @@
+\documentclass[12pt,]{tufte-handout}
+\usepackage[mono=false]{libertine}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\usepackage{pmboxdraw}
+\usepackage[utf8]{inputenc}
+
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  %% \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+  \else
+  \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+
+    \setmonofont[Mapping=tex-ansi]{inconsolata}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
+\hypersetup{
+            pdftitle={Discovering Haskell},
+            pdfauthor={FIT2102 Programming Paradigms},
+            colorlinks=true,
+            linkcolor=RoyalBlue,
+            citecolor=Blue,
+            urlcolor=RoyalBlue,
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\newenvironment{Shaded}{}{}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+\newcommand{\ImportTok}[1]{{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+\newcommand{\BuiltInTok}[1]{{#1}}
+\newcommand{\ExtensionTok}[1]{{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+\newcommand{\RegionMarkerTok}[1]{{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\NormalTok}[1]{{#1}}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+
+\title{Discovering Haskell}
+\author{FIT2102 Programming Paradigms}
+\date{S2 2017 Week 6}
+
+\begin{document}
+\maketitle
+
+\section{Preamble}\label{preamble}
+
+Welcome to your week 6 tutorial, first in Haskell! The goal of this
+session is to learn about the basic syntax of the language.
+
+First of all you will need to install Haskell. \footnote{The easiest way
+  to is to get \href{https://www.haskell.org/downloads}{Haskell
+  Platform} for your operating system.
+
+  This should come with all the tools you will need to compile, run, and
+  test Haskell code.}
+
+Next, you need to actually \emph{set up} the code. To do so, you will
+use a tool called \emph{stack} \footnote{Stack comes with the Haskell
+  Platform (there's a checkbox to tick on the Haskell Platform
+  installer). Optionally, you can download it separately from the
+  \href{https://docs.haskellstack.org/en/stable/README/}{stack website}
+  and install it for your operating system.} which takes care of all the
+nitty gritty details. In a nutshell, stack creates a contained
+environment based on the information provided in the file
+\texttt{stack.yaml}, this allows you to work on multiple projects with
+different, and possibly conflicting, requirements at the same time.
+
+To test stack, from a command prompt in the home directory
+(\texttt{cmd.exe} on windows, \texttt{terminal} on mac and linux) run:
+
+\begin{verbatim}
+$ stack new haskellPlatformTestProj
+$ cd haskellPlatformTestProj
+$ stack setup
+$ stack build
+\end{verbatim}
+
+The first time you run stack setup it will take a minute or so (it is
+installing a local version of GHC under \texttt{C:\textbackslash{}SR} or
+\texttt{\textasciitilde{}/.stack}) -- later invocations will use the
+cached version and will therefore be very quick.
+
+The default stack installation (\texttt{stack\ new}) will create a
+number of files in a project directory. The file \texttt{stack.yaml}
+contains build requirements, while \texttt{my-project.cabal} contains
+the code requirements -- external libraries and the like. The file you
+will have to worry about is \texttt{src/Lib.hs} where the logic resides,
+\texttt{app/Main.hs} is used to build an executable to run, and the test
+will not be used as of now.
+
+\texttt{stack.yaml} contains build requirements, while
+\texttt{my-project.cabal} contains the code requirements -- external
+libraries and the like. The file you will have to worry about is
+\texttt{src/Lib.hs} where the logic resides, \texttt{app/Main.hs} is
+used to build an executable to run. The file \texttt{test/Spec.hs}
+contains code to run test cases.
+
+For the Week 6 lab class, we have provided you with a \texttt{stack}
+project ready to go. The starter code is in \texttt{src/week6}. There
+are three files in this directory: \texttt{Pair.hs}, \texttt{List.hs}
+and \texttt{BinTree.hs}. Currently the functions in these files are left
+undefined. Your task is to complete the functions. So that the tests
+pass.
+
+After unzipping the folder, \texttt{cd} into it from the command line
+and run \texttt{stack\ setup}. If all goes well, after this step, your
+environment will be set up and you can start hacking. To run code within
+the environment, use:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{$ }\ExtensionTok{stack} \NormalTok{ghci}
+\end{Highlighting}
+\end{Shaded}
+
+You should see something similar to:
+
+\begin{verbatim}
+$ stack ghci
+...
+Configuring GHCi with the following packages: haskell-tutes
+Using main module: 1. Package `haskell-tutes' component exe:
+haskell-tutes with ...\week6\app\Main.hs
+GHCi, version 8.0.1: http://www.haskell.org/ghc/  :? for help
+[1 of 3] Compiling BinTree  
+[2 of 3] Compiling List   
+[3 of 3] Compiling Pair  
+Ok, modules loaded: Pair, List, BinTree.
+[4 of 4] Compiling Main    
+Ok, modules loaded: Pair, List, BinTree, Main.
+Loaded GHCi configuration from ...
+*Main BinTree List Pair>
+\end{verbatim}
+
+This is the Glasgow Haskell Compiler interactive interpreter, you will
+be able to load and run your code directly in there. This interactive
+console has tab completion, information on the code loaded, etc.
+
+For example, you should be able to create a Pair from REPL:
+
+\begin{verbatim}
+*Main BinTree List Pair> Pair 2 1
+Pair 2 1
+\end{verbatim}
+
+If not, the tutors are here to help.
+
+In every file of the tutorial, you will see functions with a type
+signature and an \texttt{undefined} in the body, you need to replace
+this with your code. \footnote{Comments starting with
+  \texttt{\textgreater{}\textgreater{}\textgreater{}} are called
+  \emph{doctests}, to verify they work run:
+
+  \texttt{\$\ stack\ test}
+
+  If your code is complete, they should all pass, if not it means you
+  still have work to do.}
+
+\section{Exercise 1: Pairs}\label{exercise-1-pairs}
+
+A \texttt{Pair} is an element comprising of two \texttt{Int}, that is
+two natural numbers.
+
+Your goal is to use \emph{pattern matching} to access the elements in a
+pair, or multiple pairs, in order to apply function to them.
+
+\section{Exercise 2: Binary Tree}\label{exercise-2-binary-tree}
+
+A \texttt{BinTree} is a \emph{recursive data structure}, which means
+that each element in a binary tree \texttt{is} a binary tree. Each node
+in a binary is therefore either a \texttt{Nil}, or empty tree; or a
+\texttt{Node}. A \texttt{Node} has three elements:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  an integer value;
+\item
+  a left sub-tree; and
+\item
+  a right sub-tree.
+\end{enumerate}
+
+Your task is to write basic functions on a binary tree.
+
+\section{Exercise 3: List}\label{exercise-3-list}
+
+A \texttt{List} is an extended container, implemented as a
+\href{https://en.wikibooks.org/wiki/Haskell/More_on_datatypes\#Named_Fields_.28Record_Syntax.29}{record}
+\footnote{Record syntax supports pattern matching as well as accessors.},
+which holds information about its inner list:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{size}: the size of the list;
+\item
+  \texttt{elems}: the actual list;
+\item
+  \texttt{low}: the lowest element in the list;
+\item
+  \texttt{high}: the highest element in the list.
+\end{itemize}
+
+Your goal is to implement functions on this data structure while keeping
+the members up to date; e.g., if you add an element to the list, you
+have to update the size, and potentially the \texttt{low} or
+\texttt{high} members.
+
+\end{document}
